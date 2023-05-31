@@ -2,36 +2,33 @@ import { InputsWrapper, PageContainer } from "./styled";
 import logo from "../../assets/images/Logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { ThreeDots } from "react-loader-spinner";
 import axios from "axios";
+import { ThreeDots } from "react-loader-spinner";
 
-export default function SignUpPage() {
+export default function LoginPage({ setToken }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [image, setImage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  function signUp(e) {
+  function login(e) {
     e.preventDefault();
     setIsLoading(true);
     const URL =
-      "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up";
+      "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login";
     const body = {
       email,
-      name,
-      image,
-      password,
+      password
     };
     axios.post(URL, body)
-      .then(() => {
+      .then(({ data }) => {
         setIsLoading(false);
-        navigate('/')
+        setToken(data.token);
+        navigate('/hoje');
       })
-      .catch(({ response }) => {
+      .catch(response => {
         setIsLoading(false);
-        alert(response.data.message);
+        alert(response);
       });
   }
 
@@ -41,7 +38,7 @@ export default function SignUpPage() {
         <Link to={"/"}>
           <img src={logo} alt="TrackIt Logo" />
         </Link>
-        <InputsWrapper onSubmit={signUp}>
+        <InputsWrapper onSubmit={login}>
           <input
             type="email"
             placeholder="email"
@@ -60,24 +57,6 @@ export default function SignUpPage() {
             disabled={isLoading}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <input
-            type="text"
-            placeholder="nome"
-            required
-            id="name"
-            value={name}
-            disabled={isLoading}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <input
-            type="url"
-            placeholder="foto"
-            required
-            id="image"
-            value={image}
-            disabled={isLoading}
-            onChange={(e) => setImage(e.target.value)}
-          />
           <button type="submit" disabled={isLoading}>
             {isLoading ? (
               <ThreeDots
@@ -91,12 +70,12 @@ export default function SignUpPage() {
                 visible={true}
               />
             ) : (
-              "Cadastrar"
+              "Entrar"
             )}
           </button>
         </InputsWrapper>
-        <Link to={"/"}>
-          <p>Já tem uma conta? Faça login!</p>
+        <Link to={"/cadastro"}>
+          <p>Não tem conta? Cadastre-se!</p>
         </Link>
       </PageContainer>
     </>
