@@ -1,15 +1,22 @@
 import { InputsWrapper, PageContainer } from "./styled";
 import logo from "../../assets/images/Logo.png";
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
+import { UserContext } from "../../context/Context";
 
-export default function LoginPage({ setToken }) {
+export default function LoginPage( {setCurrentPage} ) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
+  const currentPage = useLocation().pathname;
+
+  useEffect(() => {
+    setCurrentPage(currentPage);
+  }, []);
 
   function login(e) {
     e.preventDefault();
@@ -23,8 +30,8 @@ export default function LoginPage({ setToken }) {
     axios.post(URL, body)
       .then(({ data }) => {
         setIsLoading(false);
-        setToken(data.token);
-        navigate('/hoje');
+        setUser(data);
+        navigate("/hoje");
       })
       .catch(response => {
         setIsLoading(false);
