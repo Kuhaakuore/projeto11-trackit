@@ -5,6 +5,7 @@ import {
   DaysWrapper,
   DayButton,
   HabitDisplayContainer,
+  CancelButton,
 } from "./styled";
 import { useContext, useState } from "react";
 import { UserContext } from "../../context/Context";
@@ -23,7 +24,7 @@ export default function Habit({
   const [isLoading, setIsLoading] = useState(false);
   const currentPage = useLocation().pathname;
   const days = ["D", "S", "T", "Q", "Q", "S", "S"];
-  const { user } = useContext(UserContext);
+  const { user, setHabits } = useContext(UserContext);
 
   function createHabit(e) {
     e.preventDefault();
@@ -46,6 +47,17 @@ export default function Habit({
         setSelectedDays([]);
         setIsLoading(false);
         setHabitVisibility(false);
+        const URL =
+          "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
+        const config = {
+          headers: {
+            Authorization: "Bearer " + user?.token,
+          },
+        };
+        axios
+          .get(URL, config)
+          .then(({ data }) => setHabits(data))
+          .catch(({ response }) => console.log(response.data.message));
       })
       .catch(({ response }) => {
         alert(response.data.details);
@@ -65,7 +77,19 @@ export default function Habit({
       };
       axios
         .delete(URL, config)
-        .then()
+        .then(() => {
+          const URL =
+            "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
+          const config = {
+            headers: {
+              Authorization: "Bearer " + user?.token,
+            },
+          };
+          axios
+            .get(URL, config)
+            .then(({ data }) => setHabits(data))
+            .catch(({ response }) => console.log(response.data.message));
+        })
         .catch(({ response }) => {
           alert(response.data.message);
           setIsLoading(false);
@@ -106,7 +130,7 @@ export default function Habit({
               alt=""
               onClick={deleteHabit}
               data-test="habit-delete-btn"
-                 />
+            />
             <DaysWrapper>
               {days.map((day, index) => {
                 return (
@@ -161,12 +185,14 @@ export default function Habit({
             })}
           </DaysWrapper>
           <ButtonsWrapper>
-            <span
+            <CancelButton
+              type="button"
+              disabled={isLoading}
               onClick={() => setHabitVisibility(false)}
               data-test="habit-create-cancel-btn"
             >
               Cancelar
-            </span>
+            </CancelButton>
             <button
               type="submit"
               disabled={isLoading}

@@ -106,7 +106,7 @@ export default function SignUpPage() {
             )}
           </button>
         </InputsWrapper>
-        <Link to={"/"} data-test="login-link ">
+        <Link to={"/"} data-test="login-link">
           <p>Já tem uma conta? Faça login!</p>
         </Link>
       </PageContainer>

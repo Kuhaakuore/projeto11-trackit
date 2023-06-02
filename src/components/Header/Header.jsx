@@ -15,7 +15,7 @@ export default function Header() {
           <img
             src={user?.image !== undefined ? user.image : ""}
             alt="User's profile picture"
-          />
+          data-test="avatar"/>
         </ProfileContainer>
       </HeaderContainer>
     </>

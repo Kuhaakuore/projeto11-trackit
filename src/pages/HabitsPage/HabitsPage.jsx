@@ -11,8 +11,7 @@ import axios from "axios";
 
 export default function HabitsPage() {
   const currentPage = useLocation().pathname;
-  const { setCurrentPage } = useContext(UserContext);
-  const [habits, setHabits] = useState(undefined);
+  const { habits, setHabits, setCurrentPage } = useContext(UserContext);
   const { user } = useContext(UserContext);
   const [habitVisibility, setHabitVisibility] = useState(false);
   const [selectedDays, setSelectedDays] = useState([]);
@@ -31,7 +30,7 @@ export default function HabitsPage() {
       .get(URL, config)
       .then(({ data }) => setHabits(data))
       .catch(({ response }) => console.log(response.data.message));
-  });
+  }, []);
 
   function showForm() {
     setHabitVisibility(true);

@@ -15,6 +15,7 @@ function App() {
   const [user, setUser] = useState(undefined);
   const [completedHabits, setCompletedHabits] = useState([]);
   const [currentPage, setCurrentPage] = useState(useLocation().pathname);
+  const [habits, setHabits] = useState(undefined);
 
   return (
     <>
@@ -26,6 +27,8 @@ function App() {
           setCompletedHabits,
           currentPage,
           setCurrentPage,
+          habits,
+          setHabits
         }}
       >
         {currentPage !== "/" && currentPage !== "/cadastro" && (

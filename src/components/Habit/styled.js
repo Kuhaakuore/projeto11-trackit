@@ -41,20 +41,6 @@ const ButtonsWrapper = styled.div`
   justify-content: flex-end;
   gap: 23px;
 
-  span {
-    font-family: "Lexend Deca";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 20px;
-    text-align: center;
-    color: #52b6ff;
-    &:hover {
-      cursor: pointer;
-      color: red;
-    }
-  }
-
   button {
     width: 84px;
     height: 35px;
@@ -64,7 +50,21 @@ const ButtonsWrapper = styled.div`
     font-size: 16px;
     line-height: 20px;
     text-align: center;
-    color: #ffffff;
+  }
+`;
+
+const CancelButton = styled.button`
+  font-family: "Lexend Deca";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: center;
+  color: #52b6ff;
+  background-color: white;
+  &:hover {
+    cursor: pointer;
+    color: red;
   }
 `;
 
@@ -102,4 +102,5 @@ export {
   ButtonsWrapper,
   DayButton,
   HabitDisplayContainer,
+  CancelButton
 };
