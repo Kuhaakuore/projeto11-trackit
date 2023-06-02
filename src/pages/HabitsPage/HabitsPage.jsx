@@ -47,7 +47,9 @@ export default function HabitsPage() {
       <HabitsContainer>
         <HabitsContainerHeader>
           <h1>Meus hábitos</h1>
-          <CreateHabitButton onClick={showForm}>+</CreateHabitButton>
+          <CreateHabitButton onClick={showForm} data-test="habit-create-btn">
+            +
+          </CreateHabitButton>
         </HabitsContainerHeader>
         {habitVisibility && (
           <Habit
@@ -65,10 +67,14 @@ export default function HabitsPage() {
             começar a trackear!
           </p>
         ) : (
-          habits?.map((habit) => <Habit key={habit.id}
-          id={habit.id}
-          habitName={habit.name}
-          selectedDays={habit.days} />)
+          habits?.map((habit) => (
+            <Habit
+              key={habit.id}
+              id={habit.id}
+              habitName={habit.name}
+              selectedDays={habit.days}
+            />
+          ))
         )}
       </HabitsContainer>
     </>

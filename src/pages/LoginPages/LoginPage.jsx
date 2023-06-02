@@ -53,6 +53,7 @@ export default function LoginPage() {
             id="email"
             value={email}
             disabled={isLoading}
+            data-test="email-input"
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
@@ -62,9 +63,10 @@ export default function LoginPage() {
             id="password"
             value={password}
             disabled={isLoading}
+            data-test="password-input"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button type="submit" disabled={isLoading}>
+          <button type="submit" disabled={isLoading} data-test="login-btn">
             {isLoading ? (
               <ThreeDots
                 height="80"
@@ -81,7 +83,7 @@ export default function LoginPage() {
             )}
           </button>
         </InputsWrapper>
-        <Link to={"/cadastro"}>
+        <Link to={"/cadastro"} data-test="signup-link">
           <p>Não tem conta? Cadastre-se!</p>
         </Link>
       </PageContainer>

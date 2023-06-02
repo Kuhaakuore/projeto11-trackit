@@ -12,11 +12,11 @@ export default function Footer() {
 
   return (
     <>
-      <FooterContainer>
-        <Link to={"/habitos"}>
+      <FooterContainer data-test="menu">
+        <Link to={"/habitos"} data-test="habit-link">
           <span>Hábitos</span>
         </Link>
-        <Link to={"/hoje"}>
+        <Link to={"/hoje"} data-test="today-link">
           <div>
             <CircularProgressbarWithChildren
               value={completedHabits.length + 50}
@@ -34,7 +34,7 @@ export default function Footer() {
           </div>
         </Link>
 
-        <Link to={"/historico"}>
+        <Link to={"/historico"} data-test="history-link">
           <span>Histórico</span>
         </Link>
       </FooterContainer>

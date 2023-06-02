@@ -7,7 +7,7 @@ export default function Header() {
   const { user } = useContext(UserContext);
   return (
     <>
-      <HeaderContainer>
+      <HeaderContainer data-test="header">
         <Link to={"/"}>
           <p>TrackIt</p>
         </Link>

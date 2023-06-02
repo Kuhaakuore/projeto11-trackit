@@ -99,9 +99,14 @@ export default function Habit({
     if (id !== undefined) {
       return (
         <>
-          <HabitDisplayContainer>
-            <h1>{habitName}</h1>
-            <img src={dump} alt="" onClick={deleteHabit} />
+          <HabitDisplayContainer data-test="habit-container">
+            <h1 data-test="habit-name">{habitName}</h1>
+            <img
+              src={dump}
+              alt=""
+              onClick={deleteHabit}
+              data-test="habit-delete-btn"
+                 />
             <DaysWrapper>
               {days.map((day, index) => {
                 return (
@@ -111,6 +116,7 @@ export default function Habit({
                     type="button"
                     fill={checkDay(index + 1).fill}
                     color={checkDay(index + 1).color}
+                    data-test="habit-day"
                   >
                     {day}
                   </DayButton>
@@ -124,7 +130,10 @@ export default function Habit({
 
     return (
       <>
-        <HabitCreateContainer onSubmit={createHabit}>
+        <HabitCreateContainer
+          onSubmit={createHabit}
+          data-test="habit-create-container"
+        >
           <input
             type="text"
             placeholder="nome do hábito"
@@ -132,6 +141,7 @@ export default function Habit({
             id="habitName"
             value={habitName}
             disabled={isLoading}
+            data-test="habit-name-input"
             onChange={(e) => setHabitName(e.target.value)}
           />
           <DaysWrapper>
@@ -143,6 +153,7 @@ export default function Habit({
                   type="button"
                   fill={checkDay(index + 1).fill}
                   color={checkDay(index + 1).color}
+                  data-test="habit-day"
                   onClick={() => addDay(index + 1)}
                 >
                   {day}
@@ -151,8 +162,17 @@ export default function Habit({
             })}
           </DaysWrapper>
           <ButtonsWrapper>
-            <span onClick={() => setHabitVisibility(false)}>Cancelar</span>
-            <button type="submit" disabled={isLoading}>
+            <span
+              onClick={() => setHabitVisibility(false)}
+              data-test="habit-create-cancel-btn"
+            >
+              Cancelar
+            </span>
+            <button
+              type="submit"
+              disabled={isLoading}
+              data-test="habit-create-save-btn"
+            >
               {isLoading ? (
                 <ThreeDots
                   height="80"
