@@ -1,17 +1,17 @@
 import { InputsWrapper, PageContainer } from "./styled";
-import logo from "../../assets/images/Logo.png";
+import logo from "../../assets/img/Logo.png";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
 import { UserContext } from "../../context/Context";
 
-export default function LoginPage( {setCurrentPage} ) {
+export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { setUser } = useContext(UserContext);
+  const { setUser, setCurrentPage } = useContext(UserContext);
   const currentPage = useLocation().pathname;
 
   useEffect(() => {

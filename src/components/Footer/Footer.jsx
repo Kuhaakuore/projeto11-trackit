@@ -2,9 +2,9 @@ import {
   CircularProgressbarWithChildren,
   buildStyles,
 } from "react-circular-progressbar";
-import { FooterContainer } from "./styled";
+import { FooterContainer } from "../Footer/styled";
 import { useContext } from "react";
-import { UserContext } from "../context/Context";
+import { UserContext } from "../../context/Context";
 import { Link } from "react-router-dom";
 
 export default function Footer() {

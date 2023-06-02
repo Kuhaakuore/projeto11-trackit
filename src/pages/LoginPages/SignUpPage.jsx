@@ -1,11 +1,12 @@
 import { InputsWrapper, PageContainer } from "./styled";
-import logo from "../../assets/images/Logo.png";
+import logo from "../../assets/img/Logo.png";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import axios from "axios";
+import { UserContext } from "../../context/Context";
 
-export default function SignUpPage( {setCurrentPage} ) {
+export default function SignUpPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -13,6 +14,7 @@ export default function SignUpPage( {setCurrentPage} ) {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const currentPage = useLocation().pathname;
+  const { setCurrentPage } = useContext(UserContext);
 
   useEffect(() => {
     setCurrentPage(currentPage);

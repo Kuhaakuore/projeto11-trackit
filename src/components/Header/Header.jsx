@@ -1,7 +1,6 @@
-import trackIt from "../../src/assets/images/TrackIt.png";
-import { HeaderContainer, ProfileContainer } from "./styled";
+import { HeaderContainer, ProfileContainer } from "../Header/styled";
 import { useContext } from "react";
-import { UserContext } from "../context/Context";
+import { UserContext } from "../../context/Context";
 import { Link } from "react-router-dom";
 
 export default function Header() {

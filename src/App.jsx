@@ -3,10 +3,11 @@ import SignUpPage from "./pages/LoginPages/SignUpPage";
 import axios from "axios";
 import { useState } from "react";
 import LoginPage from "./pages/LoginPages/LoginPage";
-import TodayPage from "./pages/LoginPages/TodayPage/TodayPage";
-import Header from "./components/Header";
+import TodayPage from "./pages/TodayPage/TodayPage";
+import Header from "./components/Header/Header";
 import { UserContext } from "./context/Context";
-import Footer from "./components/Footer";
+import Footer from "./components/Footer/Footer";
+import HabitsPage from "./pages/HabitsPage/HabitsPage";
 
 function App() {
   axios.defaults.headers.common["Authorization"] = "rxa6U7iiGtZlTg8Zu5jI5qK4";
@@ -23,6 +24,7 @@ function App() {
           setUser,
           completedHabits,
           setCompletedHabits,
+          currentPage,
           setCurrentPage,
         }}
       >
@@ -33,9 +35,10 @@ function App() {
           </>
         )}
         <Routes>
-          <Route path="/" element={<LoginPage setCurrentPage={setCurrentPage}/>} />
-          <Route path="/cadastro" element={<SignUpPage setCurrentPage={setCurrentPage}/>} />
-          <Route path="/hoje" element={<TodayPage setCurrentPage={setCurrentPage}/>} />
+          <Route path="/" element={<LoginPage/>} />
+          <Route path="/cadastro" element={<SignUpPage/>} />
+          <Route path="/hoje" element={<TodayPage/>} />
+          <Route path="/habitos" element={<HabitsPage/>} />
         </Routes>
       </UserContext.Provider>
     </>

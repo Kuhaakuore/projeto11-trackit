@@ -4,6 +4,7 @@ const GlobalStyle = createGlobalStyle`
 	* {
 		box-sizing: border-box;
 	}
+
 	button {
 		width: 303px;
 		height: 45px;
@@ -17,19 +18,17 @@ const GlobalStyle = createGlobalStyle`
 		font-family: 'Lexend Deca';
 		font-style: normal;
 		font-weight: 400;
-		font-size: 20.976px;
+		font-size: 21px;
 		line-height: 26px;
 		text-align: center;
 		color: #FFFFFF;
+		
 		&:disabled {
 			opacity: 0.7;
 		}
-		&:hover {
-			background-color: #8cc5fa;
-		}
 	}
+
 	input {
-		min-width: 303px;
 		min-height: 45px;
 		background: #FFFFFF;
 		border: 1px solid #D5D5D5;
@@ -39,7 +38,7 @@ const GlobalStyle = createGlobalStyle`
 		font-weight: 400;
 		font-size: 20px;
 		line-height: 25px;
-		color: black;
+		color: #666666;
 		padding-left: 11px;
 		&::placeholder{
 			color: #DBDBDB;
