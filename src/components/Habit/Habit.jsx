@@ -48,7 +48,7 @@ export default function Habit({
         setHabitVisibility(false);
       })
       .catch(({ response }) => {
-        alert(response.data.message);
+        alert(response.data.details);
         setIsLoading(false);
       });
   }
@@ -137,7 +137,6 @@ export default function Habit({
           <input
             type="text"
             placeholder="nome do hábito"
-            required
             id="habitName"
             value={habitName}
             disabled={isLoading}

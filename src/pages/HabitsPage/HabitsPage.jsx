@@ -19,6 +19,7 @@ export default function HabitsPage() {
   const [habitName, setHabitName] = useState("");
 
   useEffect(() => {
+    setCurrentPage(currentPage);
     const URL =
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
     const config = {
@@ -35,10 +36,6 @@ export default function HabitsPage() {
   function showForm() {
     setHabitVisibility(true);
   }
-
-  useEffect(() => {
-    setCurrentPage(currentPage);
-  }, []);
 
   if (habits === undefined) return <></>;
 

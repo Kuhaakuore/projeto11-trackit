@@ -66,7 +66,7 @@ export default function SignUpPage() {
             id="password"
             value={password}
             disabled={isLoading}
-            data-test="password"
+            data-test="password-input"
             onChange={(e) => setPassword(e.target.value)}
           />
           <input
