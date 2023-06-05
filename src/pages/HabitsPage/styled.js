@@ -6,8 +6,8 @@ const HabitsContainer = styled.div`
   padding: 0 17px;
   background: #e5e5e5;
   padding-top: 98px;
-  min-height: 100vh;
   gap: 10px;
+  padding-bottom: 115px;
 
   p {
     font-family: "Lexend Deca";

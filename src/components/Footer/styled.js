@@ -11,6 +11,7 @@ const FooterContainer = styled.footer`
   justify-content: space-between;
   align-items: center;
   padding: 0 31px;
+  z-index: 1;
 
   a {
     text-decoration: none;
@@ -32,6 +33,7 @@ const FooterContainer = styled.footer`
     width: 91px;
     height: 91px;
     margin-bottom: 50px;
+
     p {
       width: 40px;
       height: 22px;

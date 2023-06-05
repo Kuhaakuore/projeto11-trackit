@@ -13,9 +13,11 @@ function App() {
   axios.defaults.headers.common["Authorization"] = "rxa6U7iiGtZlTg8Zu5jI5qK4";
 
   const [user, setUser] = useState(undefined);
-  const [completedHabits, setCompletedHabits] = useState([]);
   const [currentPage, setCurrentPage] = useState(useLocation().pathname);
   const [habits, setHabits] = useState(undefined);
+  const [todayHabits, setTodayHabits] = useState(undefined);
+  const [completedHabits, setCompletedHabits] = useState([]);
+  const [completionRate, setCompletionRate] = useState(0);
 
   return (
     <>
@@ -23,12 +25,16 @@ function App() {
         value={{
           user,
           setUser,
-          completedHabits,
-          setCompletedHabits,
           currentPage,
           setCurrentPage,
           habits,
-          setHabits
+          setHabits,
+          todayHabits,
+          setTodayHabits,
+          completedHabits,
+          setCompletedHabits,
+          completionRate,
+          setCompletionRate
         }}
       >
         {currentPage !== "/" && currentPage !== "/cadastro" && (

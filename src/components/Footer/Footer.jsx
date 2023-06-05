@@ -3,12 +3,19 @@ import {
   buildStyles,
 } from "react-circular-progressbar";
 import { FooterContainer } from "../Footer/styled";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UserContext } from "../../context/Context";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Footer() {
-  const { completedHabits } = useContext(UserContext);
+  const { user, 
+    todayHabits, 
+    completionRate } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) navigate("/");
+  }, []);
 
   return (
     <>
@@ -19,7 +26,12 @@ export default function Footer() {
         <Link to={"/hoje"} data-test="today-link">
           <div>
             <CircularProgressbarWithChildren
-              value={completedHabits.length + 50}
+              value={
+                completionRate > 0
+                  ? completionRate
+                  : 0
+              }
+              maxValue={100}
               background
               backgroundPadding={6}
               styles={buildStyles({

@@ -31,7 +31,7 @@ export default function HabitsPage() {
       .then(({ data }) => setHabits(data))
       .catch(({ response }) => console.log(response.data.message));
   }, []);
-
+  
   function showForm() {
     setHabitVisibility(true);
   }

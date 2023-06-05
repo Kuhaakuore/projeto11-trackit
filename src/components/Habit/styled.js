@@ -89,11 +89,76 @@ const HabitDisplayContainer = styled.div`
     font-size: 20px;
     line-height: 25px;
     color: #666666;
+    max-width: 240px;
   }
 
   button {
     cursor: default;
   }
+`;
+
+const HabitContainer = styled.div`
+  display: flex;
+  min-height: 91px;
+  background: #ffffff;
+  border-radius: 5px;
+  padding: 15px;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const HabitInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  h1 {
+    font-family: "Lexend Deca";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 25px;
+    color: #666666;
+    margin-bottom: 7px;
+  }
+
+  p {
+    font-family: "Lexend Deca";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    color: #666666;
+  }
+`;
+
+const CurrentSequenceSpan = styled.span`
+  font-family: "Lexend Deca";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  color: ${(props) => (props.done ? "#8FC549" : "#666666")};
+`;
+
+const HightestSequenceSpan = styled.span`
+  font-family: "Lexend Deca";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  color: ${(props) =>
+    props.currentSequence === props.highestSequence &&
+    props.currentSequence > 0
+      ? "#8FC549"
+      : "#666666"};
+`;
+
+const CheckHabitButton = styled.button`
+  width: 69px;
+  height: 69px;
+  background: ${(props) => (props.done ? "#8FC549" : "#ebebeb")};
+  border: 1px solid #e7e7e7;
+  border-radius: 5px;
 `;
 
 export {
@@ -102,5 +167,10 @@ export {
   ButtonsWrapper,
   DayButton,
   HabitDisplayContainer,
-  CancelButton
+  CancelButton,
+  HabitContainer,
+  CheckHabitButton,
+  HabitInfoContainer,
+  CurrentSequenceSpan,
+  HightestSequenceSpan,
 };

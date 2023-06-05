@@ -6,12 +6,18 @@ import {
   DayButton,
   HabitDisplayContainer,
   CancelButton,
+  HabitContainer,
+  HabitInfoContainer,
+  CheckHabitButton,
+  CurrentSequenceSpan,
+  HightestSequenceSpan,
 } from "./styled";
 import { useContext, useState } from "react";
 import { UserContext } from "../../context/Context";
 import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
 import dump from "../../assets/img/dump.svg";
+import check from "../../assets/img/check.svg";
 
 export default function Habit({
   id,
@@ -20,11 +26,12 @@ export default function Habit({
   selectedDays,
   setSelectedDays,
   setHabitVisibility,
+  habit,
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const currentPage = useLocation().pathname;
   const days = ["D", "S", "T", "Q", "Q", "S", "S"];
-  const { user, setHabits } = useContext(UserContext);
+  const { user, setHabits, completedHabits, setCompletedHabits } = useContext(UserContext);
 
   function createHabit(e) {
     e.preventDefault();
@@ -42,7 +49,7 @@ export default function Habit({
     };
     axios
       .post(URL, body, config)
-      .then(() => {
+      .then((data) => {
         setHabitName("");
         setSelectedDays([]);
         setIsLoading(false);
@@ -119,6 +126,68 @@ export default function Habit({
     }
   }
 
+  function toggleHabit(status, id) {
+    if (status) {
+      const URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`;
+      const config = {
+        headers: {
+          Authorization: "Bearer " + user?.token,
+        },
+      };
+      const body = {};
+      axios.post(URL, body, config)
+        .then(setCompletedHabits(completedHabits.filter(habitId => habitId !== id)))
+        .catch(({ response }) => {
+          alert(response.data.details);
+        });
+    }
+    else {
+      const URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`;
+      const config = {
+        headers: {
+          Authorization: "Bearer " + user?.token,
+        },
+      };
+      const body = {};
+      axios.post(URL, body, config)
+        .then(setCompletedHabits([...completedHabits, id]))
+        .catch(({ response }) => {
+          alert(response.data.details);
+        });
+    }
+  }
+
+  if (currentPage === "/hoje") {
+    const { id, name, done, currentSequence, highestSequence } = habit;
+    return (
+      <>
+        <HabitContainer>
+          <HabitInfoContainer>
+            <h1>{name}</h1>
+            <p>
+              Sequência atual:{" "}
+              <CurrentSequenceSpan done={done}>
+                {currentSequence} dias
+              </CurrentSequenceSpan>
+            </p>{" "}
+            <p>
+              Seu recorde:{" "}
+              <HightestSequenceSpan
+                currentSequence={currentSequence}
+                highestSequence={highestSequence}
+              >
+                {highestSequence} dias
+              </HightestSequenceSpan>
+            </p>{" "}
+          </HabitInfoContainer>
+          <CheckHabitButton done={done} onClick={() => toggleHabit(done, id)}>
+            <img src={check} alt="" />
+          </CheckHabitButton>
+        </HabitContainer>
+      </>
+    );
+  }
+
   if (currentPage === "/habitos") {
     if (id !== undefined) {
       return (
@@ -138,8 +207,8 @@ export default function Habit({
                     key={index}
                     disabled={isLoading}
                     type="button"
-                    fill={checkDay(index + 1).fill}
-                    color={checkDay(index + 1).color}
+                    fill={checkDay(index).fill}
+                    color={checkDay(index).color}
                     data-test="habit-day"
                   >
                     {day}
@@ -174,10 +243,10 @@ export default function Habit({
                   key={index}
                   disabled={isLoading}
                   type="button"
-                  fill={checkDay(index + 1).fill}
-                  color={checkDay(index + 1).color}
+                  fill={checkDay(index).fill}
+                  color={checkDay(index).color}
                   data-test="habit-day"
-                  onClick={() => addDay(index + 1)}
+                  onClick={() => addDay(index)}
                 >
                   {day}
                 </DayButton>
