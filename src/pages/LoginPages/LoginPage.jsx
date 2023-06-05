@@ -16,6 +16,11 @@ export default function LoginPage() {
 
   useEffect(() => {
     setCurrentPage(currentPage);
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user !== null) {
+      setUser(user);
+      navigate("/hoje");
+    }
   }, []);
 
   function login(e) {
@@ -31,6 +36,7 @@ export default function LoginPage() {
       .then(({ data }) => {
         setIsLoading(false);
         setUser(data);
+        localStorage.setItem("user", JSON.stringify(data));
         navigate("/hoje");
       })
       .catch(response => {

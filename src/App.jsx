@@ -8,6 +8,7 @@ import Header from "./components/Header/Header";
 import { UserContext } from "./context/Context";
 import Footer from "./components/Footer/Footer";
 import HabitsPage from "./pages/HabitsPage/HabitsPage";
+import HistoryPage from "./pages/HistoryPage/HistoryPage";
 
 function App() {
   axios.defaults.headers.common["Authorization"] = "rxa6U7iiGtZlTg8Zu5jI5qK4";
@@ -48,6 +49,7 @@ function App() {
           <Route path="/cadastro" element={<SignUpPage/>} />
           <Route path="/hoje" element={<TodayPage/>} />
           <Route path="/habitos" element={<HabitsPage/>} />
+          <Route path="/historico" element={<HistoryPage/>} />
         </Routes>
       </UserContext.Provider>
     </>

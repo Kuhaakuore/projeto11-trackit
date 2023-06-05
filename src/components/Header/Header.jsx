@@ -5,10 +5,14 @@ import { Link } from "react-router-dom";
 
 export default function Header() {
   const { user } = useContext(UserContext);
+
+  function logOut() {
+    localStorage.clear();
+  }
   return (
     <>
       <HeaderContainer data-test="header">
-        <Link to={"/"}>
+        <Link to={"/"} onClick={logOut}>
           <p>TrackIt</p>
         </Link>
         <ProfileContainer>

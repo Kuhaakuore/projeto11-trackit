@@ -11,6 +11,8 @@ import {
   CheckHabitButton,
   CurrentSequenceSpan,
   HightestSequenceSpan,
+  SaveButton,
+  HabbitStatusContainer,
 } from "./styled";
 import { useContext, useState } from "react";
 import { UserContext } from "../../context/Context";
@@ -18,6 +20,7 @@ import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
 import dump from "../../assets/img/dump.svg";
 import check from "../../assets/img/check.svg";
+import cross from "../../assets/img/Cross_icon_(white).svg.png"
 
 export default function Habit({
   id,
@@ -31,7 +34,8 @@ export default function Habit({
   const [isLoading, setIsLoading] = useState(false);
   const currentPage = useLocation().pathname;
   const days = ["D", "S", "T", "Q", "Q", "S", "S"];
-  const { user, setHabits, completedHabits, setCompletedHabits } = useContext(UserContext);
+  const { user, setHabits, completedHabits, setCompletedHabits } =
+    useContext(UserContext);
 
   function createHabit(e) {
     e.preventDefault();
@@ -135,13 +139,17 @@ export default function Habit({
         },
       };
       const body = {};
-      axios.post(URL, body, config)
-        .then(setCompletedHabits(completedHabits.filter(habitId => habitId !== id)))
+      axios
+        .post(URL, body, config)
+        .then(
+          setCompletedHabits(
+            completedHabits.filter((habitId) => habitId !== id)
+          )
+        )
         .catch(({ response }) => {
           alert(response.data.details);
         });
-    }
-    else {
+    } else {
       const URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`;
       const config = {
         headers: {
@@ -149,7 +157,8 @@ export default function Habit({
         },
       };
       const body = {};
-      axios.post(URL, body, config)
+      axios
+        .post(URL, body, config)
         .then(setCompletedHabits([...completedHabits, id]))
         .catch(({ response }) => {
           alert(response.data.details);
@@ -157,20 +166,36 @@ export default function Habit({
     }
   }
 
-  if (currentPage === "/hoje") {
-    const { id, name, done, currentSequence, highestSequence } = habit;
+  if (currentPage === "/historico") {
+    const { name, done } = habit;
     return (
       <>
         <HabitContainer>
           <HabitInfoContainer>
             <h1>{name}</h1>
-            <p>
+          </HabitInfoContainer>
+          <HabbitStatusContainer done={done}>
+            <img src={done ? check : cross} alt="" />
+          </HabbitStatusContainer>
+        </HabitContainer>
+      </>
+    );
+  }
+
+  if (currentPage === "/hoje") {
+    const { id, name, done, currentSequence, highestSequence } = habit;
+    return (
+      <>
+        <HabitContainer data-test="today-habit-container">
+          <HabitInfoContainer>
+            <h1 data-test="today-habit-name">{name}</h1>
+            <p data-test="today-habit-sequence">
               Sequência atual:{" "}
               <CurrentSequenceSpan done={done}>
                 {currentSequence} dias
               </CurrentSequenceSpan>
             </p>{" "}
-            <p>
+            <p data-test="today-habit-record">
               Seu recorde:{" "}
               <HightestSequenceSpan
                 currentSequence={currentSequence}
@@ -180,7 +205,9 @@ export default function Habit({
               </HightestSequenceSpan>
             </p>{" "}
           </HabitInfoContainer>
-          <CheckHabitButton done={done} onClick={() => toggleHabit(done, id)}>
+          <CheckHabitButton done={done} 
+          onClick={() => toggleHabit(done, id)}
+          data-test="today-habit-check-btn">
             <img src={check} alt="" />
           </CheckHabitButton>
         </HabitContainer>
@@ -205,7 +232,7 @@ export default function Habit({
                 return (
                   <DayButton
                     key={index}
-                    disabled={isLoading}
+                    disabled={true}
                     type="button"
                     fill={checkDay(index).fill}
                     color={checkDay(index).color}
@@ -262,10 +289,11 @@ export default function Habit({
             >
               Cancelar
             </CancelButton>
-            <button
+            <SaveButton
               type="submit"
               disabled={isLoading}
               data-test="habit-create-save-btn"
+              onClick={createHabit}
             >
               {isLoading ? (
                 <ThreeDots
@@ -281,7 +309,7 @@ export default function Habit({
               ) : (
                 "Salvar"
               )}
-            </button>
+            </SaveButton>
           </ButtonsWrapper>
         </HabitCreateContainer>
       </>

@@ -13,6 +13,7 @@ const HeaderContainer = styled.header`
   align-items: center;
   padding: 0 18px;
   z-index: 1;
+  
   p {
     width: 97px;
     height: 49px;

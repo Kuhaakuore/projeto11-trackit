@@ -7,6 +7,7 @@ const TodayContainer = styled.div`
   background: #e5e5e5;
   padding-top: 98px;
   min-height: 100vh;
+  padding-bottom: 115px;
 `;
 
 const HeaderContainer = styled.div`

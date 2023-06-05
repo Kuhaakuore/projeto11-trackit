@@ -8,6 +8,7 @@ import {
 import Habit from "../../components/Habit/Habit";
 import { UserContext } from "../../context/Context";
 import axios from "axios";
+import plus from "../../assets/img/plus.svg";
 
 export default function HabitsPage() {
   const currentPage = useLocation().pathname;
@@ -44,7 +45,7 @@ export default function HabitsPage() {
         <HabitsContainerHeader>
           <h1>Meus hábitos</h1>
           <CreateHabitButton onClick={showForm} data-test="habit-create-btn">
-            +
+            <img src={plus} alt="Plus sign" />
           </CreateHabitButton>
         </HabitsContainerHeader>
         {habitVisibility && (

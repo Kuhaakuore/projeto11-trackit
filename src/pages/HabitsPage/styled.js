@@ -26,13 +26,10 @@ const CreateHabitButton = styled.button`
   background: #52b6ff;
   border-radius: 4px;
   border: none;
-  font-family: "Lexend Deca";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 27px;
-  line-height: 34px;
-  padding-bottom: 4px;
-  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 `;
 
 const HabitsContainerHeader = styled.div`

@@ -8,6 +8,24 @@ const HabitCreateContainer = styled.form`
 
   input {
     width: 100%;
+    min-height: 45px;
+    background: #ffffff;
+    border: 1px solid #d5d5d5;
+    border-radius: 5px;
+    font-family: "Lexend Deca";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 25px;
+    color: #666666;
+    padding-left: 11px;
+    &::placeholder {
+      color: #dbdbdb;
+    }
+    &:disabled {
+      background: #f2f2f2;
+    }
+
   }
 `;
 
@@ -16,6 +34,10 @@ const DaysWrapper = styled.div`
   margin-top: 8px;
   gap: 4px;
   flex-wrap: wrap;
+
+  button {
+    cursor: pointer;
+  }
 `;
 
 const DayButton = styled.button`
@@ -30,7 +52,27 @@ const DayButton = styled.button`
   font-size: 20px;
   line-height: 25px;
   color: ${(props) => props.color};
-  &:hover {
+`;
+
+const SaveButton = styled.div`
+  width: 84px;
+  height: 35px;
+  background-color: #52b6ff;
+  border-radius: 4px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-family: "Lexend Deca";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: center;
+  color: #ffffff;
+  &:disabled {
+    opacity: 0.7;
   }
 `;
 
@@ -62,6 +104,7 @@ const CancelButton = styled.button`
   text-align: center;
   color: #52b6ff;
   background-color: white;
+  border: none;
   &:hover {
     cursor: pointer;
     color: red;
@@ -89,7 +132,6 @@ const HabitDisplayContainer = styled.div`
     font-size: 20px;
     line-height: 25px;
     color: #666666;
-    max-width: 240px;
   }
 
   button {
@@ -147,18 +189,48 @@ const HightestSequenceSpan = styled.span`
   font-size: 13px;
   line-height: 16px;
   color: ${(props) =>
-    props.currentSequence === props.highestSequence &&
-    props.currentSequence > 0
+    props.currentSequence === props.highestSequence && props.currentSequence > 0
       ? "#8FC549"
       : "#666666"};
 `;
 
 const CheckHabitButton = styled.button`
-  width: 69px;
+  min-width: 69px;
   height: 69px;
   background: ${(props) => (props.done ? "#8FC549" : "#ebebeb")};
   border: 1px solid #e7e7e7;
   border-radius: 5px;
+  cursor: pointer;
+  img {
+    width: 35px;
+    height: 28px;
+  }
+`;
+
+const HabbitStatusContainer = styled.div`
+  min-width: 69px;
+  height: 69px;
+  background: ${(props) => (props.done ? "#8FC549" : "red")};
+  border: 1px solid #e7e7e7;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  h1 {
+    font-family: "Lexend Deca";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 25px;
+    color: #666666;
+    max-width: 240px;
+  }
+
+  img {
+    width: 35px;
+    height: 28px;
+  }
 `;
 
 export {
@@ -168,9 +240,11 @@ export {
   DayButton,
   HabitDisplayContainer,
   CancelButton,
+  SaveButton,
   HabitContainer,
   CheckHabitButton,
   HabitInfoContainer,
   CurrentSequenceSpan,
   HightestSequenceSpan,
+  HabbitStatusContainer,
 };

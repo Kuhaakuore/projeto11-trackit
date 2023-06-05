@@ -1,10 +1,11 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { useLocation } from "react-router";
 import { UserContext } from "../../context/Context";
 import { HabitsContainer, HeaderContainer, TodayContainer } from "./styled";
 import dayjs from "dayjs";
 import axios from "axios";
 import Habit from "../../components/Habit/Habit";
+import "dayjs/locale/pt-br";
 
 export default function TodayPage() {
   const currentPage = useLocation().pathname;
@@ -16,7 +17,10 @@ export default function TodayPage() {
     completionRate,
     setCompletionRate,
   } = useContext(UserContext);
-  const now = dayjs().locale("pt-br").format("dddd, DD/MM");
+  const now = dayjs()
+  .locale("pt-br")
+  .format("dddd, DD/MM");
+  
   const { completedHabits, setCompletedHabits } = useContext(UserContext);
 
   useEffect(() => {
@@ -32,7 +36,7 @@ export default function TodayPage() {
       .get(URL, config)
       .then(({ data }) => {
         setTodayHabits(data);
-        if (data?.length > 0) {
+        if (data.length > 0) {
           const temp = data.filter((habit) => habit.done);
           setCompletedHabits(temp);
           setCompletionRate(
@@ -51,8 +55,8 @@ export default function TodayPage() {
     <>
       <TodayContainer>
         <HeaderContainer completionRate={completionRate}>
-          <h1>{now.charAt(0).toLocaleUpperCase() + now.slice(1)}</h1>
-          <h2>
+          <h1 data-test="today">{now.charAt(0).toLocaleUpperCase() + now.slice(1)}</h1>
+          <h2 data-test="today-counter">
             {completionRate > 0
               ? `${completionRate}% dos hábitos concluídos`
               : "Nenhum hábito concluído ainda"}
