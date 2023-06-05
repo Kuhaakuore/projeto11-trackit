@@ -1,7 +1,7 @@
 import { LoadingScreenContainer } from "./style";
 import { Puff } from "react-loader-spinner";
 
-export default function LoaodingScreen() {
+export default function LoadingScreen() {
   return (
     <>
       <LoadingScreenContainer>

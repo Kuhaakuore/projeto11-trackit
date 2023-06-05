@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import axios from "axios";
 import Habit from "../../components/Habit/Habit";
 import "dayjs/locale/pt-br";
-import LoaodingScreen from "../../components/LoadingScreen/LoadingScreen";
+import LoadingScreen from "../../components/LoadingScreen/LoadingScreen";
 
 export default function TodayPage() {
   const currentPage = useLocation().pathname;
@@ -52,7 +52,7 @@ export default function TodayPage() {
 
   if (todayHabits === undefined) return (
     <>
-      <LoaodingScreen />
+      <LoadingScreen />
     </>
   )
 

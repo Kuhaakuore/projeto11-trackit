@@ -10,7 +10,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import Habit from "../../components/Habit/Habit";
 import { DayHabitsContainer } from "./styled";
-import LoaodingScreen from "../../components/LoadingScreen/LoadingScreen";
+import LoadingScreen from "../../components/LoadingScreen/LoadingScreen";
 
 export default function HistoryPage() {
   const { user } = useContext(UserContext);
@@ -74,7 +74,7 @@ export default function HistoryPage() {
 
   if (days === undefined) return (
     <>
-      <LoaodingScreen />
+      <LoadingScreen />
     </>
   )
 

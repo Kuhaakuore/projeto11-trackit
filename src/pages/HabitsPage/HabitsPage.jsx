@@ -9,12 +9,11 @@ import Habit from "../../components/Habit/Habit";
 import { UserContext } from "../../context/Context";
 import axios from "axios";
 import plus from "../../assets/img/plus.svg";
-import LoaodingScreen from "../../components/LoadingScreen/LoadingScreen";
+import LoadingScreen from "../../components/LoadingScreen/LoadingScreen";
 
 export default function HabitsPage() {
   const currentPage = useLocation().pathname;
-  const { habits, setHabits, setCurrentPage } = useContext(UserContext);
-  const { user } = useContext(UserContext);
+  const { user, habits, setHabits, setCurrentPage } = useContext(UserContext);
   const [habitVisibility, setHabitVisibility] = useState(false);
   const [selectedDays, setSelectedDays] = useState([]);
   const [habitName, setHabitName] = useState("");
@@ -30,7 +29,9 @@ export default function HabitsPage() {
     };
     axios
       .get(URL, config)
-      .then(({ data }) => setHabits(data))
+      .then(({ data }) => {
+        setHabits(data);
+      })
       .catch(({ response }) => alert(response.data.message));
   }, []);
 
@@ -38,19 +39,19 @@ export default function HabitsPage() {
     setHabitVisibility(true);
   }
 
-  if (habits === undefined) return (
-    <>
-      <LoaodingScreen />
-    </>
-  )
+  if (habits === undefined)
+    return (
+      <>
+        <LoadingScreen />
+      </>
+    );
 
   return (
     <>
       <HabitsContainer>
         <HabitsContainerHeader>
           <h1>Meus hábitos</h1>
-          <CreateHabitButton onClick={showForm} 
-          data-test="habit-create-btn">
+          <CreateHabitButton onClick={showForm} data-test="habit-create-btn">
             <img src={plus} alt="Plus sign" />
           </CreateHabitButton>
         </HabitsContainerHeader>
