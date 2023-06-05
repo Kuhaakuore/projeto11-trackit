@@ -190,7 +190,7 @@ const HightestSequenceSpan = styled.span`
   font-size: 13px;
   line-height: 16px;
   color: ${(props) =>
-    props.currentSequence === props.highestSequence && props.currentSequence > 0
+    props.currentSequence <= props.highestSequence && props.currentSequence > 0
       ? "#8FC549"
       : "#666666"};
 `;

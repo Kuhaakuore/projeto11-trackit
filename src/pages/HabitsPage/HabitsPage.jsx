@@ -25,13 +25,13 @@ export default function HabitsPage() {
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
     const config = {
       headers: {
-        Authorization: "Bearer " + user?.token,
+        Authorization: "Bearer " + user.token,
       },
     };
     axios
       .get(URL, config)
       .then(({ data }) => setHabits(data))
-      .catch(({ response }) => console.log(response.data.message));
+      .catch(({ response }) => alert(response.data.message));
   }, []);
 
   function showForm() {
