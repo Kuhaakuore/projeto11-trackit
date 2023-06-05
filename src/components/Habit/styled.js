@@ -132,6 +132,7 @@ const HabitDisplayContainer = styled.div`
     font-size: 20px;
     line-height: 25px;
     color: #666666;
+    max-width: calc(100% - 10px);
   }
 
   button {
@@ -201,6 +202,11 @@ const CheckHabitButton = styled.button`
   border: 1px solid #e7e7e7;
   border-radius: 5px;
   cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
   img {
     width: 35px;
     height: 28px;

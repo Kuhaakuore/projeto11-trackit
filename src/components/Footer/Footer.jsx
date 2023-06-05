@@ -8,15 +8,12 @@ import { UserContext } from "../../context/Context";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Footer() {
-  const { user, 
-    todayHabits, 
-    completionRate } = useContext(UserContext);
+  const { user, completionRate } = useContext(UserContext);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!user) navigate("/");
   }, []);
-  
 
   return (
     <>
@@ -27,11 +24,7 @@ export default function Footer() {
         <Link to={"/hoje"} data-test="today-link">
           <div>
             <CircularProgressbarWithChildren
-              value={
-                completionRate > 0
-                  ? completionRate
-                  : 0
-              }
+              value={completionRate > 0 ? completionRate : 0}
               maxValue={100}
               background
               backgroundPadding={6}
@@ -40,6 +33,7 @@ export default function Footer() {
                 pathColor: "white",
                 trailColor: "transparent",
                 strokeLinecap: "round",
+                pathTransitionDuration: 0.5,
               })}
             >
               <p>Hoje</p>

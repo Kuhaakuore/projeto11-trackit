@@ -14,13 +14,13 @@ import {
   SaveButton,
   HabbitStatusContainer,
 } from "./styled";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/Context";
 import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
 import dump from "../../assets/img/dump.svg";
 import check from "../../assets/img/check.svg";
-import cross from "../../assets/img/Cross_icon_(white).svg.png"
+import cross from "../../assets/img/Cross_icon_(white).svg.png";
 
 export default function Habit({
   id,
@@ -34,8 +34,14 @@ export default function Habit({
   const [isLoading, setIsLoading] = useState(false);
   const currentPage = useLocation().pathname;
   const days = ["D", "S", "T", "Q", "Q", "S", "S"];
-  const { user, setHabits, completedHabits, setCompletedHabits } =
-    useContext(UserContext);
+  const {
+    user,
+    setHabits,
+    completedHabits,
+    setCompletedHabits,
+    flag,
+    setFlag,
+  } = useContext(UserContext);
 
   function createHabit(e) {
     e.preventDefault();
@@ -83,7 +89,7 @@ export default function Habit({
         id.toString();
       const config = {
         headers: {
-          Authorization: "Bearer " + user?.token,
+          Authorization: "Bearer " + user.token,
         },
       };
       axios
@@ -93,7 +99,7 @@ export default function Habit({
             "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
           const config = {
             headers: {
-              Authorization: "Bearer " + user?.token,
+              Authorization: "Bearer " + user.token,
             },
           };
           axios
@@ -103,7 +109,6 @@ export default function Habit({
         })
         .catch(({ response }) => {
           alert(response.data.message);
-          setIsLoading(false);
         });
     }
   }
@@ -131,21 +136,23 @@ export default function Habit({
   }
 
   function toggleHabit(status, id) {
+    setIsLoading(true);
     if (status) {
       const URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`;
       const config = {
         headers: {
-          Authorization: "Bearer " + user?.token,
+          Authorization: "Bearer " + user.token,
         },
       };
       const body = {};
       axios
         .post(URL, body, config)
-        .then(
-          setCompletedHabits(
-            completedHabits.filter((habitId) => habitId !== id)
-          )
-        )
+        .then(() => {
+          const temp = completedHabits.filter((habitId) => habitId !== id);
+          setCompletedHabits(temp);
+          setFlag(() => (flag ? false : true));
+          setIsLoading(false);
+        })
         .catch(({ response }) => {
           alert(response.data.details);
         });
@@ -153,13 +160,17 @@ export default function Habit({
       const URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`;
       const config = {
         headers: {
-          Authorization: "Bearer " + user?.token,
+          Authorization: "Bearer " + user.token,
         },
       };
       const body = {};
       axios
         .post(URL, body, config)
-        .then(setCompletedHabits([...completedHabits, id]))
+        .then(() => {
+          setCompletedHabits([...completedHabits, id]);
+          setFlag(() => (flag ? false : true));
+          setIsLoading(false);
+        })
         .catch(({ response }) => {
           alert(response.data.details);
         });
@@ -189,26 +200,43 @@ export default function Habit({
         <HabitContainer data-test="today-habit-container">
           <HabitInfoContainer>
             <h1 data-test="today-habit-name">{name}</h1>
-            <p data-test="today-habit-sequence">
+            <p>
               Sequência atual:{" "}
-              <CurrentSequenceSpan done={done}>
+              <CurrentSequenceSpan done={done} data-test="today-habit-sequence">
                 {currentSequence} dias
               </CurrentSequenceSpan>
             </p>{" "}
-            <p data-test="today-habit-record">
+            <p>
               Seu recorde:{" "}
               <HightestSequenceSpan
                 currentSequence={currentSequence}
                 highestSequence={highestSequence}
+                data-test="today-habit-record"
               >
                 {highestSequence} dias
               </HightestSequenceSpan>
             </p>{" "}
           </HabitInfoContainer>
-          <CheckHabitButton done={done} 
-          onClick={() => toggleHabit(done, id)}
-          data-test="today-habit-check-btn">
-            <img src={check} alt="" />
+          <CheckHabitButton
+            done={done}
+            disabled={isLoading}
+            onClick={() => toggleHabit(done, id)}
+            data-test="today-habit-check-btn"
+          >
+            {isLoading ? (
+              <ThreeDots
+                height="55"
+                width="55"
+                radius="9"
+                color="white"
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{}}
+                wrapperClassName=""
+                visible={true}
+              />
+            ) : (
+              <img src={check} alt="" />
+            )}
           </CheckHabitButton>
         </HabitContainer>
       </>

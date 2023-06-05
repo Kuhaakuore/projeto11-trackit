@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import { UserContext } from "../../context/Context";
 import { HabitsContainer, HeaderContainer, TodayContainer } from "./styled";
@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import axios from "axios";
 import Habit from "../../components/Habit/Habit";
 import "dayjs/locale/pt-br";
+import LoaodingScreen from "../../components/LoadingScreen/LoadingScreen";
 
 export default function TodayPage() {
   const currentPage = useLocation().pathname;
@@ -16,12 +17,13 @@ export default function TodayPage() {
     setTodayHabits,
     completionRate,
     setCompletionRate,
+    flag
   } = useContext(UserContext);
   const now = dayjs()
   .locale("pt-br")
   .format("dddd, DD/MM");
   
-  const { completedHabits, setCompletedHabits } = useContext(UserContext);
+  const { setCompletedHabits } = useContext(UserContext);
 
   useEffect(() => {
     setCurrentPage(currentPage);
@@ -29,7 +31,7 @@ export default function TodayPage() {
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today";
     const config = {
       headers: {
-        Authorization: "Bearer " + user?.token,
+        Authorization: "Bearer " + user.token,
       },
     };
     axios
@@ -40,16 +42,19 @@ export default function TodayPage() {
           const temp = data.filter((habit) => habit.done);
           setCompletedHabits(temp);
           setCompletionRate(
-            Math.floor((temp.length * 100) / todayHabits.length)
+            Math.floor((temp.length * 100) / data.length)
           );
         }
+        else setCompletionRate(0);
       })
       .catch(({ response }) => console.log(response.data.message));
-  }, [completedHabits]);
+  }, [flag]);
 
-  if (todayHabits === undefined) {
-    return <></>;
-  }
+  if (todayHabits === undefined) return (
+    <>
+      <LoaodingScreen />
+    </>
+  )
 
   return (
     <>
@@ -63,7 +68,7 @@ export default function TodayPage() {
           </h2>
         </HeaderContainer>
         <HabitsContainer>
-          {todayHabits?.map((habit) => (
+          {todayHabits.map((habit) => (
             <Habit key={habit.id} habit={habit} />
           ))}
         </HabitsContainer>

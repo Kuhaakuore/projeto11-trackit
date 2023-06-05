@@ -19,6 +19,7 @@ function App() {
   const [todayHabits, setTodayHabits] = useState(undefined);
   const [completedHabits, setCompletedHabits] = useState([]);
   const [completionRate, setCompletionRate] = useState(0);
+  const [flag, setFlag] = useState(true);
 
   return (
     <>
@@ -35,7 +36,9 @@ function App() {
           completedHabits,
           setCompletedHabits,
           completionRate,
-          setCompletionRate
+          setCompletionRate,
+          flag,
+          setFlag
         }}
       >
         {currentPage !== "/" && currentPage !== "/cadastro" && (

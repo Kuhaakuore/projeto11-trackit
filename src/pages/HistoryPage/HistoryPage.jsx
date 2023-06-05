@@ -10,6 +10,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import Habit from "../../components/Habit/Habit";
 import { DayHabitsContainer } from "./styled";
+import LoaodingScreen from "../../components/LoadingScreen/LoadingScreen";
 
 export default function HistoryPage() {
   const { user } = useContext(UserContext);
@@ -61,16 +62,21 @@ export default function HistoryPage() {
   function displayDayHabits(date) {
     dayHabits.length = 0;
     setClickedDay(dayjs(date).locale("pt-br").format("DD/MM, dddd"));
+    const fomrmatedDate = dayjs(date).format("DD/MM/YYYY");
     for (const day of days) {
       for (const habit of day.habits) {
-        if (habit.weekDay.toString() === dayjs(date).format("d")) {
+        if (habit.weekDay.toString() === dayjs(date).format("d") && fomrmatedDate === day.day) {
           dayHabits.push(habit);
         }
       }
     }
   }
 
-  if (days === undefined) return;
+  if (days === undefined) return (
+    <>
+      <LoaodingScreen />
+    </>
+  )
 
   return (
     <>
@@ -91,10 +97,10 @@ export default function HistoryPage() {
           <h1>
             {clickedDay !== undefined && dayHabits.length > 0
               ? `Lista de hábitos do dia ${clickedDay}`
-              : ``}
+              : ""}
           </h1>
-          {dayHabits.map((habit) => (
-            <Habit habit={habit} />
+          {dayHabits.map((habit, index) => (
+            <Habit habit={habit} key={index}/>
           ))}
         </DayHabitsContainer>
       </HistoryContainer>
