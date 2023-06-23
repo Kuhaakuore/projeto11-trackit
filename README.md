@@ -1,5 +1,8 @@
 # Cineflex
 
+## Deploy
+A aplicação pode ser acessada uitilizando o seguinte link: https://projeto10-cineflex-one-omega.vercel.app/
+
 ## Sobre
 Single-Page Application (SPA) para um cinema, usando React Router! 
 
